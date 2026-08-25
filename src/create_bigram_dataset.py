@@ -1,8 +1,8 @@
-from import_data import names
+from src.import_data import names
 import torch
 import torch.nn.functional as F
 
-from vocabulary import stoi, itos
+from src.vocabulary import stoi, itos
 
 X, Y = [], []
 

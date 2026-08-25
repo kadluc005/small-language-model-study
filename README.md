@@ -1,10 +1,10 @@
 # Investigating How Small Neural Language Models Learn
 
 
-Qu'est-ce que j'essaie de faire ?
+<!-- Qu'est-ce que j'essaie de faire ?
 Pourquoi je le fais ?
 Qu'est-ce que je prédis avant l'expérience ?
-Qu'est-ce que l'expérience m'a réellement montré ?
+Qu'est-ce que l'expérience m'a réellement montré ? -->
 
 ## 1. Dataset
 
@@ -61,3 +61,17 @@ Each token is represented by a vector of 28 values. Only one value is 1 and the 
 Each row will have an output 28 scores.
 The 28 scores represents the 28 tokens that its possible to predict. 
 These scores are called **logits**. The softmax activation function will later convert these logits into probabilities.
+
+### Softmax
+
+The logits values are just random values. They might not be easy to be interpreted. There is where the soft max function comes in. 
+
+$$
+\operatorname{softmax}(z_i)
+=
+\frac{e^{z_i}}{\sum_j e^{z_j}}
+$$
+
+The softmax funtion does two things essentially:
+* $e^{z_i}$ makes the values positives
+* It normalises them so that their sum returns 1.

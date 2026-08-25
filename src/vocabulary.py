@@ -1,4 +1,4 @@
-from import_data import names
+from src.import_data import names
 
 
 chars = sorted(list(set(''.join(names))))
