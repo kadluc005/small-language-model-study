@@ -1,6 +1,5 @@
 # Investigating How Small Neural Language Models Learn
 
-
 <!-- Qu'est-ce que j'essaie de faire ?
 Pourquoi je le fais ?
 Qu'est-ce que je prédis avant l'expérience ?
@@ -48,7 +47,8 @@ Two mappings are used:
 - Y represents the target character, witch is the next character after X
 - Example using "emma"
 - Number of training examples: 228,146
-- Each name produces len(name) + 1 training examples. The reason is that for one name with `len(name)=n`, there are `n+1` transitions. 
+- Each name produces len(name) + 1 training examples. The reason is that for one name with `len(name)=n`, there are `n+1` transitions.
+
 ```python
     <start> → c1
     c1      → c2
@@ -57,21 +57,34 @@ Two mappings are used:
 ```
 
 ### One-hot Encoding
+
 Each token is represented by a vector of 28 values. Only one value is 1 and the others are 0.
 Each row will have an output 28 scores.
-The 28 scores represents the 28 tokens that its possible to predict. 
+The 28 scores represents the 28 tokens that its possible to predict.
 These scores are called **logits**. The softmax activation function will later convert these logits into probabilities.
 
 ### Softmax
 
-The logits values are just random values. They might not be easy to be interpreted. There is where the soft max function comes in. 
+The logits values are just random values. They might not be easy to be interpreted. There is where the soft max function comes in.
 
 $$
-\operatorname{softmax}(z_i)
-=
-\frac{e^{z_i}}{\sum_j e^{z_j}}
+\operatorname{softmax}(z_i) = \frac{e^{z_i}}{\sum_j e^{z_j}}
 $$
 
 The softmax funtion does two things essentially:
-* $e^{z_i}$ makes the values positives
-* It normalises them so that their sum returns 1.
+
+- $e^{z_i}$ makes the values positives
+- It normalises them so that their sum returns 1.
+
+## 3. Baseline
+
+* Model architecutre:
+    * input: one-hot encoded character with 28 dimensions
+    * weight matrix: 28 × 28
+    * output: 28 logits
+    * softmax converts logits into probabilities
+    * loss: negative log-likelihood
+* Initial loss: 3.8508
+* The weights are randomly initialized
+
+

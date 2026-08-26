@@ -8,11 +8,11 @@ X = X_encoded
 
 logits = X @ W
 
-logits_one = logits[0]
 
-counts = torch.exp(logits_one)
 
-probabilities = counts / counts.sum()
+counts = torch.exp(logits)
+
+probabilities = counts / counts.sum(dim=1, keepdim=True)
 
 print(probabilities)
 print(probabilities.sum())
@@ -21,15 +21,20 @@ print(probabilities.min())
 print(probabilities.max())
 print(probabilities.sum())
 
-target = Y[0]
+target = Y
 
-probability_target = probabilities[target]
+probability_target = probabilities[torch.arange(len(Y)), target]
 
-print("target:", target.item())
-print("probability:", probability_target.item())
 
-loss = -torch.log(probability_target)
+losses = -torch.log(probability_target)
+loss = losses.mean()
 print('loss', loss.item())
 
-for p in [1.0, 0.5, 0.1, 0.01, 0.001]:
-    print(p, -torch.log(torch.tensor(p)).item())
+loss.backward()
+
+print(W.grad.shape)
+print(W.grad)
+
+print(W.grad.min())
+print(W.grad.max())
+print(W.grad.mean())
